@@ -4,20 +4,20 @@ from models.review import Review
 
 class TestReview(unittest.TestCase):
 
-    def test_from_instance_to_dict_review(self):
+    def test_to_dict_review(self):
         review = Review("test", "test", "test")
-        self.assertEqual(type(review.from_instance_to_dict()), dict)
+        self.assertEqual(type(review.to_dict()), dict)
 
     def test_from_dict_to_instace_review(self):
         review = Review("test", "test", "test")
-        review.from_dict_to_instace(review.from_instance_to_dict())
+        review.from_dict_to_instace(review.to_dict())
 
     def test_from_dict_to_json_string_review(self):
         review = Review("test", "test", "test")
         self.assertEqual(
             type(
                 review.from_dict_to_json_string(
-                    review.from_instance_to_dict())),
+                    review.to_dict())),
             str)
 
     def test_from_json_string_to_dict_review(self):
@@ -26,14 +26,14 @@ class TestReview(unittest.TestCase):
             type(
                 review.from_json_string_to_dict(
                     review.from_dict_to_json_string(
-                        review.from_instance_to_dict()))),
+                        review.to_dict()))),
             dict,
         )
 
     def test_from_json_string_to_file_review(self):
         review = Review("test", "test", "test")
         json_string = review.from_dict_to_json_string(
-            review.from_instance_to_dict())
+            review.to_dict())
         filename = "review.json"
         review.from_json_string_to_file(json_string, filename)
         with open(filename, "r") as f:

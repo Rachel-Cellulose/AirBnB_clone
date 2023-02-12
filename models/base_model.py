@@ -14,7 +14,7 @@ class BaseModel:
     def __str__(self) -> str:
         return f"{self.__class__.__name__} ({self.id}) {self.__dict__}"
 
-    def from_instance_to_dict(self) -> dict:
+    def to_dict(self) -> dict:
         return self.__dict__
 
     def from_dict_to_instace(self, dict):
@@ -34,3 +34,8 @@ class BaseModel:
     def from_file_to_json_string(self, filename):
         with open(filename, "r") as f:
             return f.read()
+
+    def save(self):
+        self.updated_at = str(datetime.now())
+        self.from_json_string_to_file(self.from_dict_to_json_string(
+            self.from_instance_to_dict()), "file.json")

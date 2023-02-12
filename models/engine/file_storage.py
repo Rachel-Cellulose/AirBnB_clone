@@ -19,7 +19,7 @@ class FileStorage:
     def save(self):
         dict = {}
         for key, value in self.__objects.items():
-            dict[key] = value.from_instance_to_dict()
+            dict[key] = value.to_dict()
         BaseModel().from_dict_to_json_string(dict)
 
     def reload(self):
