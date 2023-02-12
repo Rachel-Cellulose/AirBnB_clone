@@ -45,4 +45,4 @@ class TestCity(unittest.TestCase):
 
     def test_from_file_to_json_string_city(self):
         city = City("test", "test")
-        self.assertEqual(type(city.from_file_to_json_string("file.json")), str)
+        self.assertEqual(type(city.from_file_to_json_string("city.json")), str)

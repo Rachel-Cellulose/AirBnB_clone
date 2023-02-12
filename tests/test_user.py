@@ -43,4 +43,4 @@ class TestUser(unittest.TestCase):
 
     def test_from_file_to_json_string_user(self):
         user = User("test", "test", "test", "test")
-        self.assertEqual(type(user.from_file_to_json_string("file.json")), str)
+        self.assertEqual(type(user.from_file_to_json_string("user.json")), str)

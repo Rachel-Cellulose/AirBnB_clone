@@ -45,5 +45,5 @@ class TestReview(unittest.TestCase):
         review = Review("test", "test", "test")
         self.assertEqual(
             type(
-                review.from_file_to_json_string("file.json")),
+                review.from_file_to_json_string("review.json")),
             str)

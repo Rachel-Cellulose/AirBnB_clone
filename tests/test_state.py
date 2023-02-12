@@ -47,5 +47,5 @@ class TestState(unittest.TestCase):
         state = State("test")
         self.assertEqual(
             type(
-                state.from_file_to_json_string("file.json")),
+                state.from_file_to_json_string("state.json")),
             str)

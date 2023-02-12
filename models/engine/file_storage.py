@@ -1,6 +1,4 @@
-#!/usr/bin/python3
-
-from models.base_model import BaseModel
+import json
 
 
 class FileStorage:
@@ -20,7 +18,14 @@ class FileStorage:
         dict = {}
         for key, value in self.__objects.items():
             dict[key] = value.to_dict()
-        BaseModel().from_dict_to_json_string(dict)
+        json.dumps(dict)
 
     def reload(self):
-        pass
+        try:
+            with open(self.__file_path, 'r') as f:
+                objects_dict = json.load(f)
+                for key in objects_dict:
+                    class_name, obj_id = key.split(".")
+                    self.__objects[key] = eval(class_name)(**objects_dict[key])
+        except FileNotFoundError:
+            pass

@@ -3,6 +3,7 @@
 import json
 import uuid
 from datetime import datetime
+from models import storage
 
 
 class BaseModel:
@@ -45,7 +46,5 @@ class BaseModel:
             return f.read()
 
     def save(self):
+        storage.save()
         self.updated_at = str(datetime.now())
-        self.from_json_string_to_file(
-            self.from_dict_to_json_string(self.from_instance_to_dict()), "file.json"  # noqa: E501
-        )
