@@ -20,6 +20,9 @@ class BaseModel:
         self.updated_at = updated_at
         self.name = name
         self.my_number = my_number
+        # if new instance, create new  storage
+        if self.id not in storage.all():
+            storage.new(self)
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__} ({self.id}) {self.__dict__}"
