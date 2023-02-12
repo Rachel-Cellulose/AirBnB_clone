@@ -4,6 +4,7 @@ import json
 import uuid
 from datetime import datetime
 
+
 class BaseModel:
     def __init__(self) -> None:
         self.id = str(uuid.uuid4())
