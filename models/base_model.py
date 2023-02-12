@@ -6,10 +6,11 @@ from datetime import datetime
 
 
 class BaseModel:
-    def __init__(self) -> None:
-        self.id = str(uuid.uuid4())
-        self.created_at = str(datetime.now())
-        self.updated_at = str(datetime.now())
+    def __init__(self, id=str(uuid.uuid4()), created_at=str(datetime.now()), updated_at=str(datetime.now()),  name=None, my_number=None) -> None:
+        self.id = id
+        self.created_at = created_at
+        self.updated_at = updated_at
+        self.name = name
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__} ({self.id}) {self.__dict__}"
