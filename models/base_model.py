@@ -6,11 +6,19 @@ from datetime import datetime
 
 
 class BaseModel:
-    def __init__(self, id=str(uuid.uuid4()), created_at=str(datetime.now()), updated_at=str(datetime.now()),  name=None, my_number=None) -> None:
+    def __init__(
+        self,
+        id=str(uuid.uuid4()),
+        created_at=str(datetime.now()),
+        updated_at=str(datetime.now()),
+        name=None,
+        my_number=None,
+    ) -> None:
         self.id = id
         self.created_at = created_at
         self.updated_at = updated_at
         self.name = name
+        self.my_number = my_number
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__} ({self.id}) {self.__dict__}"
@@ -38,5 +46,6 @@ class BaseModel:
 
     def save(self):
         self.updated_at = str(datetime.now())
-        self.from_json_string_to_file(self.from_dict_to_json_string(
-            self.from_instance_to_dict()), "file.json")
+        self.from_json_string_to_file(
+            self.from_dict_to_json_string(self.from_instance_to_dict()), "file.json"  # noqa: E501
+        )
