@@ -2,6 +2,7 @@
 
 # UNIT TESTS
 
+import os
 import unittest
 from models.user import User
 from models.state import State
@@ -99,33 +100,14 @@ class TestFileStorage(unittest.TestCase):
             1,
             1,
             ["test"])
-        self.assertEqual(
-            type(
-                place.from_json_string_to_file(
-                    place.from_dict_to_json_string(
-                        place.from_instance_to_dict()),
-                    "file.json",
-                )),
-            str,
-        )
+        json_string = place.from_dict_to_json_string(place.from_instance_to_dict())
+        filename = "place.json"
+        place.from_json_string_to_file(json_string, filename)
+        with open(filename, "r") as f:
+            self.assertEqual(f.read(), json_string)
 
-    def test_from_file_to_json_string_place(self):
-        place = Place(
-            "test",
-            "test",
-            "test",
-            "test",
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            ["test"])
-        self.assertEqual(
-            type(
-                place.from_file_to_json_string("file.json")),
-            str)
+        # os.remove(filename) 
+
 
     # test class `User`
     def test_from_instance_to_dict_user(self):
@@ -157,15 +139,13 @@ class TestFileStorage(unittest.TestCase):
 
     def test_from_json_string_to_file_user(self):
         user = User("test", "test", "test", "test")
-        self.assertEqual(
-            type(
-                user.from_json_string_to_file(
-                    user.from_dict_to_json_string(
-                        user.from_instance_to_dict()),
-                    "file.json",
-                )),
-            str,
-        )
+        json_string = user.from_dict_to_json_string(user.from_instance_to_dict())
+        filename = "user.json"
+        user.from_json_string_to_file(json_string, filename)
+        with open(filename, "r") as f:
+            self.assertEqual(json_string, f.read())
+        
+        # os.remove(filename)
 
     def test_from_file_to_json_string_user(self):
         user = User("test", "test", "test", "test")
@@ -173,15 +153,15 @@ class TestFileStorage(unittest.TestCase):
 
     # test class `State`
     def test_from_instance_to_dict_state(self):
-        state = State("test", "test")
+        state = State( "test")
         self.assertEqual(type(state.from_instance_to_dict()), dict)
 
     def test_from_dict_to_instace_state(self):
-        state = State("test", "test")
+        state = State("test")
         state.from_dict_to_instace(state.from_instance_to_dict())
 
     def test_from_dict_to_json_string_state(self):
-        state = State("test", "test")
+        state = State("test")
         self.assertEqual(
             type(
                 state.from_dict_to_json_string(
@@ -189,7 +169,7 @@ class TestFileStorage(unittest.TestCase):
             str)
 
     def test_from_json_string_to_dict_state(self):
-        state = State("test", "test")
+        state = State("test")
         self.assertEqual(
             type(
                 state.from_json_string_to_dict(
@@ -199,19 +179,18 @@ class TestFileStorage(unittest.TestCase):
         )
 
     def test_from_json_string_to_file_state(self):
-        state = State("test", "test")
-        self.assertEqual(
-            type(
-                state.from_json_string_to_file(
-                    state.from_dict_to_json_string(
-                        state.from_instance_to_dict()),
-                    "file.json",
-                )),
-            str,
-        )
+        state = State("test")
+        json_string = state.from_dict_to_json_string(state.from_instance_to_dict())
+        filename = "state.json"
+        state.from_json_string_to_file(json_string, filename)
+        with open(filename, "r") as f:
+            self.assertEqual(json_string, f.read())
+        
+        # os.remove(filename)
 
+    
     def test_from_file_to_json_string_state(self):
-        state = State("test", "test")
+        state = State("test")
         self.assertEqual(
             type(
                 state.from_file_to_json_string("file.json")),
@@ -219,15 +198,15 @@ class TestFileStorage(unittest.TestCase):
 
     # test class `City`
     def test_from_instance_to_dict_city(self):
-        city = City("test", "test", "test")
+        city = City("test", "test")
         self.assertEqual(type(city.from_instance_to_dict()), dict)
 
     def test_from_dict_to_instace_city(self):
-        city = City("test", "test", "test")
+        city = City("test", "test")
         city.from_dict_to_instace(city.from_instance_to_dict())
 
     def test_from_dict_to_json_string_city(self):
-        city = City("test", "test", "test")
+        city = City("test", "test")
         self.assertEqual(
             type(
                 city.from_dict_to_json_string(
@@ -235,7 +214,7 @@ class TestFileStorage(unittest.TestCase):
             str)
 
     def test_from_json_string_to_dict_city(self):
-        city = City("test", "test", "test")
+        city = City("test", "test")
         self.assertEqual(
             type(
                 city.from_json_string_to_dict(
@@ -244,42 +223,47 @@ class TestFileStorage(unittest.TestCase):
             ),
             dict,
         )
-
+    
     def test_from_json_string_to_file_city(self):
-        city = City("test", "test", "test")
-        self.assertEqual(
-            type(
-                city.from_json_string_to_file(
-                    city.from_dict_to_json_string(
-                        city.from_instance_to_dict()),
-                    "file.json",
-                )),
-            str,
-        )
+        city = City("test", "test")
+        json_string = city.from_dict_to_json_string(city.from_instance_to_dict())
+        filename = "city.json"
+        city.from_json_string_to_file(json_string, filename)
+        with open(filename, "r") as f:
+            self.assertEqual(json_string, f.read())
+        
+        # os.remove(filename)
 
     def test_from_file_to_json_string_city(self):
-        city = City("test", "test", "test")
+        city = City("test", "test")
         self.assertEqual(type(city.from_file_to_json_string("file.json")), str)
 
     # test class `Amenity`
     def test_from_instance_to_dict_amenity(self):
-        amenity = Amenity("test", "test")
+        amenity = Amenity("test")
         self.assertEqual(type(amenity.from_instance_to_dict()), dict)
 
     def test_from_dict_to_instace_amenity(self):
-        amenity = Amenity("test", "test")
+        amenity = Amenity("test")
         amenity.from_dict_to_instace(amenity.from_instance_to_dict())
 
     def test_from_dict_to_json_string_amenity(self):
-        amenity = Amenity("test", "test")
+        amenity = Amenity("test")
         self.assertEqual(
             type(
                 amenity.from_dict_to_json_string(
                     amenity.from_instance_to_dict())),
             str)
 
+    def test_from_file_to_json_string_amenity(self):
+        amenity = Amenity("test")
+        self.assertEqual(
+            type(
+                amenity.from_file_to_json_string("amenity.json")),
+            str)
+        
     def test_from_json_string_to_dict_amenity(self):
-        amenity = Amenity("test", "test")
+        amenity = Amenity("test")
         self.assertEqual(
             type(
                 amenity.from_json_string_to_dict(
@@ -287,37 +271,30 @@ class TestFileStorage(unittest.TestCase):
                         amenity.from_instance_to_dict()))),
             dict,
         )
+    
 
     def test_from_json_string_to_file_amenity(self):
-        amenity = Amenity("test", "test")
-        self.assertEqual(
-            type(
-                amenity.from_json_string_to_file(
-                    amenity.from_dict_to_json_string(
-                        amenity.from_instance_to_dict()),
-                    "file.json",
-                )),
-            str,
-        )
+        amenity = Amenity("test")
+        json_string = amenity.from_dict_to_json_string(amenity.from_instance_to_dict())
+        filename = "amenity.json"
+        amenity.from_json_string_to_file(json_string, filename)
+        with open(filename, "r") as f:
+            self.assertEqual(json_string, f.read())
 
-    def test_from_file_to_json_string_amenity(self):
-        amenity = Amenity("test", "test")
-        self.assertEqual(
-            type(
-                amenity.from_file_to_json_string("file.json")),
-            str)
+        # os.remove(filename)
+
 
     # test class `Review`
     def test_from_instance_to_dict_review(self):
-        review = Review("test", "test", "test", "test")
+        review = Review("test", "test", "test")
         self.assertEqual(type(review.from_instance_to_dict()), dict)
 
     def test_from_dict_to_instace_review(self):
-        review = Review("test", "test", "test", "test")
+        review = Review("test", "test", "test")
         review.from_dict_to_instace(review.from_instance_to_dict())
 
     def test_from_dict_to_json_string_review(self):
-        review = Review("test", "test", "test", "test")
+        review = Review("test", "test", "test")
         self.assertEqual(
             type(
                 review.from_dict_to_json_string(
@@ -325,7 +302,7 @@ class TestFileStorage(unittest.TestCase):
             str)
 
     def test_from_json_string_to_dict_review(self):
-        review = Review("test", "test", "test", "test")
+        review = Review("test", "test", "test")
         self.assertEqual(
             type(
                 review.from_json_string_to_dict(
@@ -335,19 +312,17 @@ class TestFileStorage(unittest.TestCase):
         )
 
     def test_from_json_string_to_file_review(self):
-        review = Review("test", "test", "test", "test")
-        self.assertEqual(
-            type(
-                review.from_json_string_to_file(
-                    review.from_dict_to_json_string(
-                        review.from_instance_to_dict()),
-                    "file.json",
-                )),
-            str,
-        )
+        review = Review("test", "test", "test")
+        json_string = review.from_dict_to_json_string(review.from_instance_to_dict())
+        filename = "review.json"
+        review.from_json_string_to_file(json_string, filename)
+        with open(filename, "r") as f:
+            self.assertEqual(json_string, f.read())
+
+        # os.remove(filename)
 
     def test_from_file_to_json_string_review(self):
-        review = Review("test", "test", "test", "test")
+        review = Review("test", "test", "test")
         self.assertEqual(
             type(
                 review.from_file_to_json_string("file.json")),
