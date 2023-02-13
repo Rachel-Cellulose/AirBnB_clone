@@ -1,13 +1,11 @@
 #!/usr/bin/python3
+"""This module creates a User class"""
 
 from models.base_model import BaseModel
 
 
 class City(BaseModel):
-    def __init__(self, name, state_id) -> None:
-        super().__init__()
-        self.name: str = name
-        self.state_id: str = state_id
+    """Class for managing city objects"""
 
-    def __str__(self) -> str:
-        return f"City: {self.name}"
+    state_id = ""
+    name = ""

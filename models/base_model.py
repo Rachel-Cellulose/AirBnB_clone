@@ -1,53 +1,55 @@
 #!/usr/bin/python3
+"""This script is the base model"""
 
-import json
 import uuid
 from datetime import datetime
 from models import storage
 
 
 class BaseModel:
-    def __init__(
-        self,
-        id=str(uuid.uuid4()),
-        created_at=str(datetime.now()),
-        updated_at=str(datetime.now()),
-        name=None,
-        my_number=None,
-    ) -> None:
-        self.id = id
-        self.created_at = created_at
-        self.updated_at = updated_at
-        self.name = name
-        self.my_number = my_number
-        # if new instance, create new  storage
-        if self.id not in storage.all():
+
+    """Class from which all other classes will inherit"""
+
+    def __init__(self, *args, **kwargs):
+        """Initializes instance attributes
+        Args:
+            - *args: list of arguments
+            - **kwargs: dict of key-values arguments
+        """
+
+        if kwargs is not None and kwargs != {}:
+            for key in kwargs:
+                if key == "created_at":
+                    self.__dict__["created_at"] = datetime.strptime(
+                        kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
+                elif key == "updated_at":
+                    self.__dict__["updated_at"] = datetime.strptime(
+                        kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
+                else:
+                    self.__dict__[key] = kwargs[key]
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
             storage.new(self)
 
-    def __str__(self) -> str:
-        return f"{self.__class__.__name__} ({self.id}) {self.__dict__}"
+    def __str__(self):
+        """Returns official string representation"""
 
-    def to_dict(self) -> dict:
-        return self.__dict__
-
-    def from_dict_to_instace(self, dict):
-        for key, value in dict.items():
-            setattr(self, key, value)
-
-    def from_dict_to_json_string(self, dict):
-        return json.dumps(dict)
-
-    def from_json_string_to_dict(self, json_string):
-        return json.loads(json_string)
-
-    def from_json_string_to_file(self, json_string, filename):
-        with open(filename, "w") as f:
-            f.write(json_string)
-
-    def from_file_to_json_string(self, filename):
-        with open(filename, "r") as f:
-            return f.read()
+        return "[{}] ({}) {}".\
+            format(type(self).__name__, self.id, self.__dict__)
 
     def save(self):
+        """updates the public instance attribute updated_at"""
+
+        self.updated_at = datetime.now()
         storage.save()
-        self.updated_at = str(datetime.now())
+
+    def to_dict(self):
+        """returns a dictionary containing all keys/values of __dict__"""
+
+        my_dict = self.__dict__.copy()
+        my_dict["__class__"] = type(self).__name__
+        my_dict["created_at"] = my_dict["created_at"].isoformat()
+        my_dict["updated_at"] = my_dict["updated_at"].isoformat()
+        return my_dict

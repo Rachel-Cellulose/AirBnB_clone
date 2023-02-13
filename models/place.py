@@ -1,35 +1,20 @@
 #!/usr/bin/python3
+"""This module creates a Place class"""
 
 from models.base_model import BaseModel
 
 
 class Place(BaseModel):
-    def __init__(
-        self,
-        city_id,
-        user_id,
-        name,
-        description,
-        number_rooms,
-        number_bathrooms,
-        max_guest,
-        price_by_night,
-        latitude,
-        longitude,
-        amenity_ids,
-    ) -> None:
-        super().__init__()
-        self.city_id: str = city_id
-        self.user_id: str = user_id
-        self.name: str = name
-        self.description: str = description
-        self.number_rooms: int = number_rooms
-        self.number_bathrooms: int = number_bathrooms
-        self.max_guest: int = max_guest
-        self.price_by_night: int = price_by_night
-        self.latitude: float = latitude
-        self.longitude: float = longitude
-        self.amenity_ids: list = amenity_ids
+    """Class for managing place objects"""
 
-    def __str__(self) -> str:
-        return f"Place: {self.name}"
+    city_id = ""
+    user_id = ""
+    name = ""
+    description = ""
+    number_rooms = 0
+    number_bathrooms = 0
+    max_guest = 0
+    price_by_night = 0
+    latitude = 0.0
+    longitude = 0.0
+    amenity_ids = []
